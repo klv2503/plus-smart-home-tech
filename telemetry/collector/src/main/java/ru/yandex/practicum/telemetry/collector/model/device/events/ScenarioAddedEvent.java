@@ -1,5 +1,6 @@
 package ru.yandex.practicum.telemetry.collector.model.device.events;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @ToString
 public class ScenarioAddedEvent extends HubEvent {
+    @NotBlank
     private String name;
 
     private List<ScenarioCondition> conditions;

@@ -29,8 +29,7 @@ public class ConditionsMapper {
         switch (scenario.getValue()) {
             case Integer i -> builder.setValue(i);
             case Boolean b -> builder.setValue(b);
-            case null -> builder.setValue(null);
-            default -> throw new IllegalArgumentException("Unsupported value type: " + scenario.getValue().getClass());
+            default -> builder.setValue(null);
         }
 
         return builder.build();

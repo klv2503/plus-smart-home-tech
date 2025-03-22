@@ -1,6 +1,6 @@
 package ru.yandex.practicum.telemetry.collector.model.device.events;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +12,7 @@ import ru.yandex.practicum.telemetry.collector.model.device.HubEventType;
 @ToString
 public class ScenarioRemovedEvent extends HubEvent {
 
-    @NotNull
+    @NotBlank
     private String name;
 
     @Override
