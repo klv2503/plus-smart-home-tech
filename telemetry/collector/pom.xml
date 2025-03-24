@@ -72,6 +72,16 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+        </dependency>
+
     </dependencies>
 
     <repositories>
