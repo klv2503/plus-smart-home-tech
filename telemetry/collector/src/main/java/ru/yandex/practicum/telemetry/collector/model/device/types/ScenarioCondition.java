@@ -1,12 +1,13 @@
 package ru.yandex.practicum.telemetry.collector.model.device.types;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ScenarioCondition {
 
     private String sensorId;
