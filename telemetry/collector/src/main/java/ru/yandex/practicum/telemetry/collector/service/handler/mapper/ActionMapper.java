@@ -3,8 +3,8 @@ package ru.yandex.practicum.telemetry.collector.service.handler.mapper;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.telemetry.event.ActionTypeAvro;
 import ru.yandex.practicum.kafka.telemetry.event.DeviceActionAvro;
-import ru.yandex.practicum.telemetry.collector.model.device.types.ActionType;
-import ru.yandex.practicum.telemetry.collector.model.device.types.DeviceAction;
+import ru.yandex.practicum.common.model.device.types.ActionType;
+import ru.yandex.practicum.common.model.device.types.DeviceAction;
 
 import java.util.List;
 
@@ -24,6 +24,20 @@ public class ActionMapper {
     public static List<DeviceActionAvro> devAtcListToAvro(List<DeviceAction> actions) {
         return actions.stream()
                 .map(ActionMapper::devActToAvro)
+                .toList();
+    }
+
+    public static DeviceAction devActAvroToJava(DeviceActionAvro action) {
+        return DeviceAction.builder()
+                .sensorId(action.getSensorId())
+                .type(ActionType.valueOf(action.getType().name()))
+                .value(action.getValue())
+                .build();
+    }
+
+    public static List<DeviceAction> devActAvroListToJavaList(List<DeviceActionAvro> actions) {
+        return actions.stream()
+                .map(ActionMapper::devActAvroToJava)
                 .toList();
     }
 }

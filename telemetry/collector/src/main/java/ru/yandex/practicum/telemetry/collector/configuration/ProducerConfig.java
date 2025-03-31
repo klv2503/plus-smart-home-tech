@@ -3,7 +3,7 @@ package ru.yandex.practicum.telemetry.collector.configuration;
 import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.bind.ConstructorBinding;
-import ru.yandex.practicum.telemetry.collector.model.TopicType;
+import ru.yandex.practicum.common.model.TopicType;
 
 import java.util.EnumMap;
 import java.util.HashMap;

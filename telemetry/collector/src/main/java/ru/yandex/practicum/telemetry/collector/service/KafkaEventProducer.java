@@ -6,7 +6,7 @@ import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.telemetry.collector.configuration.KafkaConfig;
-import ru.yandex.practicum.telemetry.collector.model.TopicType;
+import ru.yandex.practicum.common.model.TopicType;
 
 import java.lang.reflect.InvocationTargetException;
 

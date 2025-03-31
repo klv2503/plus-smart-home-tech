@@ -10,6 +10,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.common.kafka.serializer.GeneralAvroSerializer;
 import ru.yandex.practicum.telemetry.collector.configuration.KafkaConfig;
 
 import java.util.Properties;
@@ -35,7 +36,7 @@ public class DefaultKafkaClient implements KafkaClient {
         Properties properties = new Properties();
         properties.putAll(kafkaConfig.getProducer().getProperties());
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ru.yandex.practicum.kafka.serializer.GeneralAvroSerializer.class.getName());
+        properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, GeneralAvroSerializer.class.getName());
 
         this.producer = new KafkaProducer<>(properties);
     }

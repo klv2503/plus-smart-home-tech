@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.telemetry.event.ConditionOperationAvro;
 import ru.yandex.practicum.kafka.telemetry.event.ConditionTypeAvro;
 import ru.yandex.practicum.kafka.telemetry.event.ScenarioConditionAvro;
-import ru.yandex.practicum.telemetry.collector.model.device.types.ConditionOperation;
-import ru.yandex.practicum.telemetry.collector.model.device.types.ConditionType;
-import ru.yandex.practicum.telemetry.collector.model.device.types.ScenarioCondition;
+import ru.yandex.practicum.common.model.device.types.ConditionOperation;
+import ru.yandex.practicum.common.model.device.types.ConditionType;
+import ru.yandex.practicum.common.model.device.types.ScenarioCondition;
 
 import java.util.List;
 
@@ -38,6 +38,21 @@ public class ConditionsMapper {
     public static List<ScenarioConditionAvro> condListToAvro(List<ScenarioCondition> conditions) {
         return conditions.stream()
                 .map(ConditionsMapper::sceCondToAvro)
+                .toList();
+    }
+
+    public static ScenarioCondition condAvroToJava(ScenarioConditionAvro scenario) {
+        return ScenarioCondition.builder()
+                .sensorId(scenario.getSensorId())
+                .type(ConditionType.valueOf(scenario.getType().name()))
+                .operation(ConditionOperation.valueOf(scenario.getOperation().name()))
+                .value(scenario.getValue())
+                .build();
+    }
+
+    public static List<ScenarioCondition> condAvroListToJava(List<ScenarioConditionAvro> conditions) {
+        return conditions.stream()
+                .map(ConditionsMapper::condAvroToJava)
                 .toList();
     }
 }
