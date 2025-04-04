@@ -24,7 +24,7 @@ public class DeviceRemovedEventHandler extends BaseHubEventHandler<DeviceRemoved
     protected DeviceRemovedEventAvro mapToAvro(HubEventProto event) {
         DeviceRemovedEventProto thisEvent = event.getDeviceRemoved();
         DeviceRemovedEventAvro devRemAvro = DeviceRemovedEventAvro.newBuilder()
-                .setRemovedId(thisEvent.getId())
+                .setId(thisEvent.getId())
                 .build();
         log.trace("\nDeviceAddedEventHandler: devAddAvro {}", devRemAvro);
         return devRemAvro;

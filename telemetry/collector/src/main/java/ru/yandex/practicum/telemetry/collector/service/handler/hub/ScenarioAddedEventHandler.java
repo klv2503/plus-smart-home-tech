@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.grpc.telemetry.event.ScenarioAddedEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.ScenarioAddedEventAvro;
-import ru.yandex.practicum.common.model.device.types.DeviceAction;
-import ru.yandex.practicum.common.model.device.types.ScenarioCondition;
+import ru.yandex.practicum.model.device.types.DeviceAction;
+import ru.yandex.practicum.model.device.types.ScenarioCondition;
 import ru.yandex.practicum.telemetry.collector.service.KafkaEventProducer;
-import ru.yandex.practicum.telemetry.collector.service.handler.mapper.ActionMapper;
-import ru.yandex.practicum.telemetry.collector.service.handler.mapper.ConditionsMapper;
+import ru.yandex.practicum.mappers.ActionMapper;
+import ru.yandex.practicum.mappers.ConditionsMapper;
 import ru.yandex.practicum.telemetry.collector.service.handler.mapper.ProtoActionMapper;
 import ru.yandex.practicum.telemetry.collector.service.handler.mapper.ProtoConditionMapper;
 

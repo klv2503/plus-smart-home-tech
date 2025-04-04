@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.grpc.telemetry.event.ConditionOperationProto;
 import ru.yandex.practicum.grpc.telemetry.event.ConditionTypeProto;
 import ru.yandex.practicum.grpc.telemetry.event.ScenarioConditionProto;
-import ru.yandex.practicum.common.model.device.types.ConditionOperation;
-import ru.yandex.practicum.common.model.device.types.ConditionType;
-import ru.yandex.practicum.common.model.device.types.ScenarioCondition;
+import ru.yandex.practicum.model.device.types.ConditionOperation;
+import ru.yandex.practicum.model.device.types.ConditionType;
+import ru.yandex.practicum.model.device.types.ScenarioCondition;
 
 import java.util.List;
 
