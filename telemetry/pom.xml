@@ -17,6 +17,15 @@
         <module>collector</module>
         <module>aggregator</module>
         <module>common</module>
+        <module>analyzer</module>
     </modules>
+
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
 
 </project>
