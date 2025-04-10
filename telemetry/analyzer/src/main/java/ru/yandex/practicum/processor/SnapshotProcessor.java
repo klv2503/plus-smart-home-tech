@@ -42,7 +42,7 @@ public class SnapshotProcessor implements Runnable {
                         SensorsSnapshotAvro snapshot = (SensorsSnapshotAvro) record.value();
                         List<DeviceActionRequest> messageList = handler.process(snapshot);
                         if (!messageList.isEmpty()) {
-                            log.info("Send {}", messageList);
+                            log.info("\nSend {}", messageList);
                             sendToGrpc(messageList);
                         }
                     }

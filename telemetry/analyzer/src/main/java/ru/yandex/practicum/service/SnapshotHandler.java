@@ -3,6 +3,7 @@ package ru.yandex.practicum.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.yandex.practicum.entities.Condition;
 import ru.yandex.practicum.entities.Scenario;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionRequest;
@@ -18,6 +19,7 @@ import java.util.function.BiFunction;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class SnapshotHandler {
 
     private final ScenarioRepository scenarioRepository;
@@ -41,12 +43,16 @@ public class SnapshotHandler {
     }
 
     private boolean checkScenario(Scenario scenario, SensorsSnapshotAvro snapshotAvro) {
+        log.info("\nSnapshotHandler.checkScenario: check scenario {}", scenario);
+
         return scenario.getConditions().entrySet().stream()
                 .allMatch(entry -> {
                     String sensorId = entry.getKey();
                     Condition condition = entry.getValue();
-
+                    log.info("\nCondition: {}", condition);
                     SensorStateAvro state = snapshotAvro.getSensorsState().get(sensorId);
+                    log.info("\nSensorStateAvro: {}", state);
+
                     if (state == null || state.getData() == null)
                         return false;
 
@@ -61,12 +67,15 @@ public class SnapshotHandler {
 
     private Boolean isFitsClimateCondition(Condition condition, Object payload) {
         ClimateSensorAvro sensor = (ClimateSensorAvro) payload;
-        return switch (condition.getType()) {
+        log.info("\nClimateSensorAvro: {}, check condition {}", sensor, condition);
+        boolean result = switch (condition.getType()) {
             case TEMPERATURE -> isValueFits(condition, sensor.getTemperatureC());
             case HUMIDITY -> isValueFits(condition, sensor.getHumidity());
             case CO2LEVEL -> isValueFits(condition, sensor.getCo2Level());
             default -> false;
         };
+        log.info("\nResult {}", result);
+        return result;
     }
 
     private Boolean isFitsLightCondition(Condition condition, Object payload) {
