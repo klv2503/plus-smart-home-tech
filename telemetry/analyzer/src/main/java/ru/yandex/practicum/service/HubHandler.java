@@ -3,6 +3,7 @@ package ru.yandex.practicum.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.yandex.practicum.entities.Action;
 import ru.yandex.practicum.entities.Condition;
 import ru.yandex.practicum.entities.Scenario;
@@ -20,6 +21,7 @@ import java.util.function.Consumer;
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class HubHandler {
 
     private final SensorRepository sensorRepository;
