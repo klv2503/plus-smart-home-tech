@@ -40,11 +40,9 @@ public class AggregationStarter {
      */
 
     public void start() {
-        consumer = client.getKafkaConsumer(sensorsConsumerConfig.getConfigName(),
-                        sensorsConsumerConfig.getConsumerConfig().getProperties());
+        consumer = client.getKafkaConsumer(sensorsConsumerConfig.getConsumerConfig().getProperties());
         consumer.subscribe(sensorsConsumerConfig.getConsumerConfig().getTopics().values().stream().toList());
-        producer = client.getKafkaProducer(snapshotsProducerConfig.getConfigName(),
-                snapshotsProducerConfig.getProducerConfig().getProperties());
+        producer = client.getKafkaProducer(snapshotsProducerConfig.getProducerConfig().getProperties());
 
         try {
             // Цикл обработки событий
@@ -52,12 +50,15 @@ public class AggregationStarter {
                 try {
                     ConsumerRecords<String, SpecificRecordBase> records = consumer.poll(Duration.ofMillis(5000));
                     if (!records.isEmpty()) {
+                        log.trace("\nAggregationStarter: accepted {}", records);
                         for (ConsumerRecord<String, SpecificRecordBase> record : records) {
                             // Здесь происходит обработка полученных данных
                                     SensorEventAvro sensorEventAvro = (SensorEventAvro) record.value();
                                     SensorsSnapshotAvro thisSnapshot = aggregationState.sensorEventHandle(sensorEventAvro);
-                                    if (thisSnapshot != null)
+                                    if (thisSnapshot != null) {
+                                        log.trace("\nAggregationStarter: new snapshot for send {}", thisSnapshot);
                                         producer.send(new ProducerRecord<>("telemetry.snapshots.v1", null, thisSnapshot));
+                                    }
                         }
                         consumer.commitSync();
                     }

@@ -31,7 +31,7 @@ public class SnapshotHandler {
     );
 
     public List<DeviceActionRequest> process(SensorsSnapshotAvro snapshotAvro) {
-
+        log.info("\nSnapshotHandler.process: received {}", snapshotAvro);
         List<Scenario> scenarios = scenarioRepository.findByHubId(snapshotAvro.getHubId());
         return scenarios.stream()
                 .filter(s -> checkScenario(s, snapshotAvro))

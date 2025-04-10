@@ -1,14 +1,16 @@
 package ru.yandex.practicum;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import ru.yandex.practicum.processor.HubEventProcessor;
 import ru.yandex.practicum.processor.SnapshotProcessor;
 
 @SpringBootApplication
-@ComponentScan("ru.yandex.practicum")
+@ConfigurationPropertiesScan
+@Slf4j
 public class Analyzer {
     public static void main(String[] args) {
         ConfigurableApplicationContext context =
@@ -16,8 +18,10 @@ public class Analyzer {
 
         final HubEventProcessor hubEventProcessor =
                 context.getBean(HubEventProcessor.class);
+        log.info("HubEventProcessor loaded: {}", hubEventProcessor);
         SnapshotProcessor snapshotProcessor =
                 context.getBean(SnapshotProcessor.class);
+        log.info("SnapshotProcessor loaded: {}", snapshotProcessor);
 
         // запускаем в отдельном потоке обработчик событий
         // от пользовательских хабов

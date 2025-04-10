@@ -18,8 +18,6 @@ import org.springframework.stereotype.Component;
 public class SnapshotConsumerConfig {
     @Autowired
     private SnapshotConsumerProperties snapshotConsumerProperties;
-    //используется в качестве ключа в Map консюмеров и продюсеров в KafkaClient
-    private final String configName = "hub-consumerConfig";
 
     @PostConstruct
     public void checkInit() {

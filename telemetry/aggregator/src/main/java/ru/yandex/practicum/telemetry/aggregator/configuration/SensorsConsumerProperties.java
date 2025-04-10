@@ -3,6 +3,7 @@ package ru.yandex.practicum.telemetry.aggregator.configuration;
 import jakarta.annotation.PostConstruct;
 import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.TopicType;
 
@@ -18,6 +19,7 @@ public class SensorsConsumerProperties {
     private final Map<String, String> properties;
     private final Map<TopicType, String> topics;
 
+    @ConstructorBinding
     public SensorsConsumerProperties(Map<String, String> properties, Map<String, String> topics) {
         this.properties = properties;
         this.topics = new EnumMap<>(TopicType.class);

@@ -31,7 +31,7 @@ public class KafkaEventProducer {
         ProducerRecord<String, SpecificRecordBase> record = new ProducerRecord<>(topic, null, event);
         log.trace("\nKafkaEventProducer: record {}, class {}", record,
                 record.value() != null ? getPayloadClass(record.value()) : null);
-        client.getProducer(kafkaConfig.getConfigName(), kafkaConfig.getProducer().getProperties()).send(record);
+        client.getProducer(kafkaConfig.getProducer().getProperties()).send(record);
     }
 
     private String getPayloadClass(Object event) {

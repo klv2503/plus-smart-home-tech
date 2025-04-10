@@ -14,8 +14,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("collector.kafka")
 public class CollectorProducerConfig {
     private CollectorProducerProperties producer;
-    //используется в качестве ключа в Map консюмеров и продюсеров в KafkaClient
-    private final String configName = "collector-producer";
 
     @PostConstruct
     public void checkInit() {

@@ -33,7 +33,7 @@ public class HubHandler {
     );
 
     public void habEventHandle(HubEventAvro value) {
-        log.trace("HubHandler.habEventHandle: accepted {}", value);
+        log.info("HubHandler.habEventHandle: accepted {}", value);
         Object payload = value.getPayload();
         if (payload == null)
             throw new IllegalStateException("HubHandler: unexpected: payload == null");
@@ -46,7 +46,6 @@ public class HubHandler {
     }
 
     private void addDevice(HubEventAvro value) {
-        log.trace("Hub {} for creation", value.getHubId());
         DeviceAddedEventAvro payload = (DeviceAddedEventAvro) value.getPayload();
         Sensor sensor = Sensor.builder()
                 .id(payload.getId())
@@ -54,16 +53,17 @@ public class HubHandler {
                 .build();
         //Поскольку у нас нет события типа DeviceUpdate пока считаем, что добавление сенсора с имеющимся id
         // это переключение его на новый hub
+        log.info("addDevice: write to Base sensor {}", sensor);
         sensorRepository.save(sensor);
     }
 
     private void removeDevice(HubEventAvro value) {
-        log.trace("Hub {} for removing", value);
+        log.info("Hub {} for removing", value);
         DeviceRemovedEventAvro payload = (DeviceRemovedEventAvro) value.getPayload();
         String sensorId = payload.getId();
         Sensor sensor = sensorRepository.findByIdAndHubId(sensorId, value.getHubId()).orElse(null);
         if (sensor == null) {
-            log.trace("Sensor id {}, hubId {} not exists, removing is impossible.", sensorId, value.getHubId());
+            log.info("Sensor id {}, hubId {} not exists, removing is impossible.", sensorId, value.getHubId());
         } else {
             List<Scenario> scenarios = scenarioRepository.findByHubId(sensor.getHubId());
             for (Scenario scenario : scenarios) {
@@ -82,7 +82,7 @@ public class HubHandler {
     }
 
     private void addScenario(HubEventAvro value) {
-        log.trace("Scene {} for adding", value);
+        log.info("Scene {} for adding", value);
         ScenarioAddedEventAvro payload = (ScenarioAddedEventAvro) value.getPayload();
 
         Map<String, Action> actions = AvroActionMapper.actionAvroListToMap(payload.getActions());
@@ -99,11 +99,11 @@ public class HubHandler {
     }
 
     private void removeScenario(HubEventAvro value) {
-        log.trace("Scene {} for removing", value);
+        log.info("Scene {} for removing", value);
         ScenarioRemovedEventAvro payload = (ScenarioRemovedEventAvro) value.getPayload();
         Scenario scenario = scenarioRepository.findByHubIdAndName(value.getHubId(), payload.getName()).orElse(null);
         if (scenario == null) {
-            log.trace("Scenario hubId {}, name {} not exists, removing is impossible.", value.getHubId(), payload.getName());
+            log.info("Scenario hubId {}, name {} not exists, removing is impossible.", value.getHubId(), payload.getName());
         } else {
             scenarioRepository.delete(scenario);
         }

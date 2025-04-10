@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 public class HubsConsumerConfig {
     @Autowired
     private HubsConsumerProperties hubsConsumerProperties;
-    private final String configName = "hub-consumerConfig";
 
     @PostConstruct
     public void checkInit() {

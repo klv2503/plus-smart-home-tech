@@ -27,14 +27,14 @@ public class HubEventProcessor implements Runnable {
 
     @Override
     public void run() {
-        consumer = client.getKafkaConsumer(consumerConfig.getConfigName(),
-                consumerConfig.getHubsConsumerProperties().getProperties());
+        consumer = client.getKafkaConsumer(consumerConfig.getHubsConsumerProperties().getProperties());
         consumer.subscribe(consumerConfig.getHubsConsumerProperties().getTopics().values().stream().toList());
-        log.trace("Subscribed to topic: {}", consumer.subscription());
+        log.info("HubEventProcessor: Subscribed to topic: {}", consumer.subscription());
         try {
             while (true) {
                 ConsumerRecords<String, SpecificRecordBase> records = consumer.poll(Duration.ofMillis(5000));
                 if (!records.isEmpty()) {
+                    log.info("\nHubEventProcessor: accepted " + records);
                     for (ConsumerRecord<String, SpecificRecordBase> record : records) {
                         HubEventAvro event = (HubEventAvro) record.value();
                         handler.habEventHandle(event);

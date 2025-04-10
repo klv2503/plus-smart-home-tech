@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.bind.ConstructorBinding;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.TopicType;
 
@@ -21,6 +22,7 @@ public class HubsConsumerProperties {
     private final Map<String, String> properties;
     private final EnumMap<TopicType, String> topics;
 
+    @ConstructorBinding
     public HubsConsumerProperties(Map<String, String> properties, Map<String, String> topics) {
         this.properties = properties;
         this.topics = new EnumMap<>(TopicType.class);

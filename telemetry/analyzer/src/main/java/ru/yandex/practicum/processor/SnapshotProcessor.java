@@ -30,18 +30,19 @@ public class SnapshotProcessor implements Runnable {
 
     @Override
     public void run() {
-        consumer = client.getKafkaConsumer(consumerConfig.getConfigName(),
-                consumerConfig.getSnapshotConsumerProperties().getProperties());
+        consumer = client.getKafkaConsumer(consumerConfig.getSnapshotConsumerProperties().getProperties());
         consumer.subscribe(consumerConfig.getSnapshotConsumerProperties().getTopics().values().stream().toList());
-        log.trace("Subscribed to topic: {}", consumer.subscription());
-        try {
+        log.info("SnapshotProcessor: Subscribed to topic: {}", consumer.subscription());
+        try  {
             while (true) {
                 ConsumerRecords<String, SpecificRecordBase> records = consumer.poll(Duration.ofMillis(1000));
                 if (!records.isEmpty()) {
+                    log.info("SnapshotProcessor: records {}", records);
                     for (ConsumerRecord<String, SpecificRecordBase> record : records) {
                         SensorsSnapshotAvro snapshot = (SensorsSnapshotAvro) record.value();
                         List<DeviceActionRequest> messageList = handler.process(snapshot);
                         if (!messageList.isEmpty()) {
+                            log.info("Send {}", messageList);
                             sendToGrpc(messageList);
                         }
                     }
@@ -54,10 +55,12 @@ public class SnapshotProcessor implements Runnable {
         } finally {
             consumer.close();
         }
-
     }
 
     public void start() {
+        Thread thread = new Thread(this);
+        thread.setName("SnapshotProcessorThread");
+        thread.start();
     }
 
     private void sendToGrpc(List<DeviceActionRequest> requests) {
