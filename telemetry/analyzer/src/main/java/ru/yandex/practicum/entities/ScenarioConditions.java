@@ -25,10 +25,4 @@ public class ScenarioConditions {
     @JoinColumn(name = "sensor_id")
     private Sensor sensor;
 
-    /*@ManyToOne
-    @MapsId("conditionId")
-    @JoinColumn(name = "condition_id")
-    private Condition condition;
-
-     */
 }

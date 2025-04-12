@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.kafka.telemetry.event.*;
+import ru.yandex.practicum.telemetry.aggregator.enums.SensorClass;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,20 +19,21 @@ public class AggregationState {
     public SensorsSnapshotAvro sensorEventHandle(SensorEventAvro value) {
         Object payload = value.getPayload();
         //Проверка на случай, если по каким-то причинам возникла ошибка
-        if (payload == null)
+        if (payload == null) {
             throw new IllegalStateException("Unexpected: payload == null");
+        }
         // Если новый hub, то добавляем в snapshots
         snapshots.computeIfAbsent(value.getHubId(), k ->
                 new SensorsSnapshotAvro(k, value.getTimestamp(), new HashMap<>())
         );
-        String thisEventClass = value.getPayload().getClass().getSimpleName();
-        return switch (thisEventClass) {
-            case "ClimateSensorAvro" -> isNewState(value, ClimateSensorAvro.class);
-            case "LightSensorAvro" -> isNewState(value, LightSensorAvro.class);
-            case "MotionSensorAvro" -> isNewState(value, MotionSensorAvro.class);
-            case "SwitchSensorAvro" -> isNewState(value, SwitchSensorAvro.class);
-            case "TemperatureSensorAvro" -> isNewState(value, TemperatureSensorAvro.class);
-            default -> throw new IllegalStateException("Unexpected value: " + thisEventClass);
+        SensorClass sensorClass = SensorClass.fromPayload(payload)
+                .orElseThrow(() -> new IllegalStateException("Unknown payload type: " + payload.getClass()));
+        return switch (sensorClass) {
+            case CLIMATE -> isNewState(value, ClimateSensorAvro.class);
+            case LIGHT -> isNewState(value, LightSensorAvro.class);
+            case MOTION -> isNewState(value, MotionSensorAvro.class);
+            case SWITCH -> isNewState(value, SwitchSensorAvro.class);
+            case TEMPERATURE -> isNewState(value, TemperatureSensorAvro.class);
         };
     }
 

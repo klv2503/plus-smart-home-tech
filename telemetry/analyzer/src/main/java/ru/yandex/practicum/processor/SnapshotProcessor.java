@@ -9,6 +9,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.configuration.SnapshotConsumerConfig;
+import ru.yandex.practicum.configuration.SnapshotConsumerProperties;
 import ru.yandex.practicum.grpc.telemetry.event.DeviceActionRequest;
 import ru.yandex.practicum.kafka.client.KafkaClient;
 import ru.yandex.practicum.kafka.telemetry.event.SensorsSnapshotAvro;
@@ -23,13 +24,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SnapshotProcessor implements Runnable {
     private final KafkaClient client;
-    private final SnapshotConsumerConfig consumerConfig;
+    private final SnapshotConsumerProperties snapshotConsumerProperties;
     private final SnapshotHandler handler;
     private final HubRouterGrpcProducer hubRouterGrpcProducer;
     protected KafkaConsumer<String, SpecificRecordBase> consumer;
 
     @Override
     public void run() {
+        SnapshotConsumerConfig consumerConfig = new SnapshotConsumerConfig(snapshotConsumerProperties);
         consumer = client.getKafkaConsumer(consumerConfig.getSnapshotConsumerProperties().getProperties());
         consumer.subscribe(consumerConfig.getSnapshotConsumerProperties().getTopics().values().stream().toList());
         log.info("SnapshotProcessor: Subscribed to topic: {}", consumer.subscription());

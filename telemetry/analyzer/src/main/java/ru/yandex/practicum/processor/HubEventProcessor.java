@@ -8,6 +8,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.configuration.HubsConsumerProperties;
 import ru.yandex.practicum.kafka.client.KafkaClient;
 import ru.yandex.practicum.configuration.HubsConsumerConfig;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
@@ -20,13 +21,14 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class HubEventProcessor implements Runnable {
     private final KafkaClient client;
-    private final HubsConsumerConfig consumerConfig;
+    private final HubsConsumerProperties hubsConsumerProperties;
     private final HubHandler handler;
     protected KafkaConsumer<String, SpecificRecordBase> consumer;
 
 
     @Override
     public void run() {
+        HubsConsumerConfig consumerConfig = new HubsConsumerConfig(hubsConsumerProperties);
         consumer = client.getKafkaConsumer(consumerConfig.getHubsConsumerProperties().getProperties());
         consumer.subscribe(consumerConfig.getHubsConsumerProperties().getTopics().values().stream().toList());
         log.info("HubEventProcessor: Subscribed to topic: {}", consumer.subscription());

@@ -37,13 +37,14 @@ public class HubHandler {
     public void habEventHandle(HubEventAvro value) {
         log.info("HubHandler.habEventHandle: accepted {}", value);
         Object payload = value.getPayload();
-        if (payload == null)
+        if (payload == null) {
             throw new IllegalStateException("HubHandler: unexpected: payload == null");
+        }
 
         Consumer<HubEventAvro> handler = hubHandlers.get(payload.getClass());
-        if (handler == null)
+        if (handler == null) {
             throw new IllegalStateException("habEventHandle: Unexpected value payload.getClass: " + payload.getClass());
-
+        }
         handler.accept(value);
     }
 

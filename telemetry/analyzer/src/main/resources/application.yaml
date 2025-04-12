@@ -2,9 +2,9 @@ spring:
   application:
     name: analyzer
   datasource:
-    url: jdbc:postgresql://localhost:6543/mydatabase
-    username: user
-    password: password
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:6543/mydatabase}
+    username: ${DATABASE_USERNAME:user}
+    password: ${DATABASE_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
   sql:
     init:
@@ -24,29 +24,29 @@ analyzer:
     consumers:
       hubs:
         properties:
-          bootstrap.servers: localhost:9092
-          group.id: telemetry-analyzer-hubs
-          client.id: telemetry.analyzer.hubs
+          bootstrap.servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+          group.id: ${KAFKA_ANALYZER_GROUP_ID:telemetry-analyzer-hubs}
+          client.id: ${KAFKA_ANALYZER_CLIENT_ID:telemetry.analyzer.hubs}
           auto.offset.reset: earliest
           key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
           value.deserializer: ru.yandex.practicum.kafka.deserializer.HubEventAvroDeserializer
         topics:
-          hubs-events: telemetry.hubs.v1
+          hubs-events: ${KAFKA_TOPIC_HUBS_EVENTS:telemetry.hubs.v1}
       snapshots:
         properties:
-          bootstrap.servers: localhost:9092
-          group.id: telemetry-analyzer-snapshots
-          client.id: telemetry.analyzer.snapshots
+          bootstrap.servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+          group.id: ${KAFKA_ANALYZER_GROUP_ID:telemetry-analyzer-snapshots}
+          client.id: ${KAFKA_ANALYZER_CLIENT_ID:telemetry.analyzer.snapshots}
           auto.offset.reset: earliest
           key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
           value.deserializer: ru.yandex.practicum.kafka.deserializer.SensorsSnapshotAvroDeserializer
         topics:
-          snapshots-events: telemetry.snapshots.v1
+          snapshots-events: ${KAFKA_TOPIC_SNAPSHOTS_EVENTS:telemetry.snapshots.v1}
 
 grpc:
   client:
     hub-router:
-      address: 'static://localhost:59090'
+      address: ${GRPC_HUB_ROUTER_ADDRESS:static://localhost:59090}
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext

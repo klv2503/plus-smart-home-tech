@@ -53,14 +53,15 @@ public class SnapshotHandler {
                     SensorStateAvro state = snapshotAvro.getSensorsState().get(sensorId);
                     log.info("\nSensorStateAvro: {}", state);
 
-                    if (state == null || state.getData() == null)
+                    if (state == null || state.getData() == null) {
                         return false;
+                    }
 
                     Object payload = state.getData();
                     BiFunction<Condition, Object, Boolean> inspector = isFits.get(payload.getClass());
-                    if (inspector == null)
+                    if (inspector == null) {
                         throw new IllegalStateException("Unexpected value class: " + payload.getClass());
-
+                    }
                     return inspector.apply(condition, payload);
                 });
     }

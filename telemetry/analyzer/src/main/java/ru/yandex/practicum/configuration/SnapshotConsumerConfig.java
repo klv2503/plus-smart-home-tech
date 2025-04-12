@@ -2,10 +2,8 @@ package ru.yandex.practicum.configuration;
 
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +11,13 @@ import org.springframework.stereotype.Component;
 @Setter
 @ToString
 @Component
-@RequiredArgsConstructor
 @ConfigurationProperties("analyzer.kafka.consumers.hubs")
 public class SnapshotConsumerConfig {
-    @Autowired
-    private SnapshotConsumerProperties snapshotConsumerProperties;
+    private final SnapshotConsumerProperties snapshotConsumerProperties;
+
+    public SnapshotConsumerConfig(SnapshotConsumerProperties snapshotConsumerProperties) {
+        this.snapshotConsumerProperties = snapshotConsumerProperties;
+    }
 
     @PostConstruct
     public void checkInit() {
