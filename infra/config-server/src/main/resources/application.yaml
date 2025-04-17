@@ -10,8 +10,13 @@ spring:
           searchLocations:
             - classpath:config/telemetry/{application}
 server:
-  port: 8888
+  port: 0
 eureka:
   client:
+    registerWithEureka: true
+    fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname:localhost}:${eureka.instance.port:8761}/eureka/
+    instance:
+      preferIpAddress: true
+      instanceId: ${spring.application.name}:${random.uuid}

@@ -2,7 +2,7 @@ spring:
   application:
     name: aggregator
   config:
-    import: "configserver:"
+    import: "optional:configserver:"
   cloud:
     config:
       discovery:
@@ -10,5 +10,9 @@ spring:
         serviceId: config-server
 eureka:
   client:
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname:localhost}:${eureka.instance.port:8761}/eureka/
+    instance:
+      preferIpAddress: true
