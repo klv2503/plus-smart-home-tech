@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: shopping-store
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:6543/mydatabase}
+    username: ${DATABASE_USERNAME:user}
+    password: ${DATABASE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
+server:
+  port: 0
+
+logging:
+  level:
+    ru.yandex.practicum.commerce: TRACE
+    feign: DEBUG
+    org.springframework.cloud.openfeign: DEBUG
+    org:
+      springframework: ERROR
