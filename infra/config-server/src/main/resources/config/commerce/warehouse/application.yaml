@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: warehouse
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:6543/mydatabase}
+    username: ${DATABASE_USERNAME:user}
+    password: ${DATABASE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+server:
+  port: 0
+
+logging:
+  level:
+    ru.yandex.practicum.commerce: TRACE
+    org:
+      springframework: ERROR
