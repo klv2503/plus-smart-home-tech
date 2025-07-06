@@ -67,34 +67,44 @@ public class WarehouseService {
 
         List<String> noProds = new ArrayList<>();
         Map<String, PairOfQuantities> deficits = new HashMap<>();
-        BigDecimal weight = new BigDecimal("0");
-        BigDecimal volume = new BigDecimal("0");
-        boolean isFragile = false;
-
-        for (UUID id : productMap.keySet()) {
-            if (foundProds.containsKey(id)) {
-                if (foundProds.get(id).getQuantity() >= productMap.get(id)) {
-                    weight = weight.add(BigDecimal.valueOf(productMap.get(id) * foundProds.get(id).getWeight()));
-                    volume = volume.add(foundProds.get(id).getDimensions().getVolume()
-                            .multiply(BigDecimal.valueOf(productMap.get(id))));
-                    isFragile = isFragile || foundProds.get(id).isFragile();
-                } else {
-                    deficits.put(id.toString(),
-                            PairOfQuantities.builder()
-                                    .wanted(productMap.get(id))
-                                    .available(foundProds.get(id).getQuantity())
-                                    .build());
-                }
-            } else {
+        //Воспользоваться кодом их ревью очень хотелось - как минимум для образца,
+        //но для подсчетов потребовались усложнения в виде Atomic и все как-то усложнилось и стало менее наглядным.
+        //Поэтому унес подсчеты массы и объема в отдельный цикл, чтобы вообще их считать только если надо.
+        productMap.forEach((id, requiredQuantity) -> {
+            var product = foundProds.get(id);
+            if (product == null) {
                 noProds.add(id.toString());
+                return;
             }
-        }
+
+            var availableQuantity = product.getQuantity();
+            if (availableQuantity < requiredQuantity) {
+                deficits.put(id.toString(), PairOfQuantities.builder()
+                        .wanted(requiredQuantity)
+                        .available(availableQuantity)
+                        .build());
+            }
+        });
 
         if (!noProds.isEmpty()) {
             throw new NoProductsInShoppingCartException(noProds);
         }
         if (!deficits.isEmpty())
             throw new ProductInShoppingCartLowQuantityInWarehouseException(deficits);
+
+        var weight = BigDecimal.ZERO;
+        var volume = BigDecimal.ZERO;
+        var isFragile = false;
+
+        for (UUID id : productMap.keySet()) {
+            var product = foundProds.get(id);
+            var required = BigDecimal.valueOf(productMap.get(id));
+
+            weight = weight.add(BigDecimal.valueOf(product.getWeight()).multiply(required));
+            volume = volume.add(product.getDimensions().getVolume().multiply(required));
+            isFragile = isFragile || product.isFragile();
+        }
+
         return BookedProductsDto.builder()
                 .deliveryWeight(weight)
                 .deliveryVolume(volume)

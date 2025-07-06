@@ -1,4 +1,4 @@
-package ru.yandex.practicum.commerce.warehouse;
+package ru.yandex.practicum.commerce.warehouse.config;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
