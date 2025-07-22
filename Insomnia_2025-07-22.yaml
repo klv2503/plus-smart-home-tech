@@ -1,0 +1,995 @@
+type: collection.insomnia.rest/5.0
+name: SmartHome
+meta:
+  id: wrk_058fd44ea21f48ea84ef26397265fa5a
+  created: 1752576101569
+  modified: 1752576101569
+  description: ""
+collection:
+  - name: Разное
+    meta:
+      id: fld_79b3a6bce9ca40198af491d91435f730
+      created: 1752752151499
+      modified: 1752752151499
+      sortKey: -1752752151499
+      description: ""
+    children:
+      - url: http://localhost:8080/warehouse/address
+        name: GetWarehouseAdress
+        meta:
+          id: req_5e2be59e4d7843268d058dadfc0dc4d9
+          created: 1752576190685
+          modified: 1752752195139
+          isPrivate: false
+          description: ""
+          sortKey: -1752752189882
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/residue?productId=993f1491-0701-47c6-91f3-fb9b61cb3fc8
+        name: GetResidue
+        meta:
+          id: req_96bd42499d12470ab5a27429e1dacf13
+          created: 1752576345107
+          modified: 1752752189830
+          isPrivate: false
+          description: ""
+          sortKey: -1752752189782
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order
+        name: Create Alices Order 1
+        meta:
+          id: req_4ee39394677846acb661c829f8706d7d
+          created: 1752684537218
+          modified: 1752820459100
+          isPrivate: false
+          description: ""
+          sortKey: -1752752190082
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "shopCartDto": {
+                "shoppingCartId": "aad2e2c0-1a4d-4c58-a8a6-ecff5c181abe",
+                "products": {
+                  "f447a8f9-5df2-44a7-ae0b-88e1d01d3f3c": 7,
+                  "1b337b3d-4a64-43df-9df5-00ed4d0ccf41": 22
+                }
+              },
+              "address": {
+                "country": "Germany",
+                "city": "Hamburg",
+                "street": "Hafenstraße",
+                "house": "7B",
+                "flat": "21"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order?userName=alice
+        name: AliceOrders2
+        meta:
+          id: req_5a232741ed0e49d18f8fecf07b04d5ac
+          created: 1752752081749
+          modified: 1753127776077
+          isPrivate: false
+          description: ""
+          sortKey: -1752752190057
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order
+        name: Create Order errorLastSymbCartId
+        meta:
+          id: req_93bbfcc67b264eb9912973b7e492cbb3
+          created: 1752820547539
+          modified: 1753153995055
+          isPrivate: false
+          description: ""
+          sortKey: -1752752190032
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "shopCartDto": {
+                "shoppingCartId": "b1f9d7a0-2f9b-4b2c-9a55-7cce0c85f4d3",
+                "products": {
+                  "f447a8f9-5df2-44a7-ae0b-88e1d01d3f3c": 5,
+                  "993f1491-0701-47c6-91f3-fb9b61cb3fc8": 7
+                }
+              },
+              "address": {
+                "country": "Germany",
+                "city": "Berlin",
+                "street": "Prenzlauer Allee",
+                "house": "45A",
+                "flat": "12"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order
+        name: Create Order errorLastSymbProdId1
+        meta:
+          id: req_ead5c47c5ef94e9eaf07e1a8d2d5049d
+          created: 1752820746721
+          modified: 1753154100549
+          isPrivate: false
+          description: ""
+          sortKey: -1752752190007
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "shopCartDto": {
+                "shoppingCartId": "b1f9d7a0-2f9b-4b2c-9a55-7cce0c85f4d2",
+                "products": {
+                  "f447a8f9-5df2-44a7-ae0b-88e1d01d3f3d": 5,
+                  "993f1491-0701-47c6-91f3-fb9b61cb3fc8": 7
+                }
+              },
+              "address": {
+                "country": "Germany",
+                "city": "Berlin",
+                "street": "Prenzlauer Allee",
+                "house": "45A",
+                "flat": "12"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order
+        name: Create Order errorTooMuchProds1
+        meta:
+          id: req_51565d89d7b444d9af3a9471d8b4a80d
+          created: 1752820754989
+          modified: 1753154086849
+          isPrivate: false
+          description: ""
+          sortKey: -1752752189994.5
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "shopCartDto": {
+                "shoppingCartId": "b1f9d7a0-2f9b-4b2c-9a55-7cce0c85f4d2",
+                "products": {
+                  "f447a8f9-5df2-44a7-ae0b-88e1d01d3f3c": 40,
+                  "993f1491-0701-47c6-91f3-fb9b61cb3fc8": 7
+                }
+              },
+              "address": {
+                "country": "Germany",
+                "city": "Berlin",
+                "street": "Prenzlauer Allee",
+                "house": "45A",
+                "flat": "12"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order
+        name: Create Johns Order normal
+        meta:
+          id: req_a248fe1698a64e049ca4a5b5df0ab97b
+          created: 1752820847735
+          modified: 1752820860249
+          isPrivate: false
+          description: ""
+          sortKey: -1752752189988.25
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "shopCartDto": {
+                "shoppingCartId": "b1f9d7a0-2f9b-4b2c-9a55-7cce0c85f4d2",
+                "products": {
+                  "f447a8f9-5df2-44a7-ae0b-88e1d01d3f3c": 5,
+                  "993f1491-0701-47c6-91f3-fb9b61cb3fc8": 7
+                }
+              },
+              "address": {
+                "country": "Germany",
+                "city": "Berlin",
+                "street": "Prenzlauer Allee",
+                "house": "45A",
+                "flat": "12"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/shopping-cart/all
+        name: Get all shopping carts authorized
+        meta:
+          id: req_71ee9e04837c449cb37fd084f82d8622
+          created: 1752820955787
+          modified: 1753122513855
+          isPrivate: false
+          description: ""
+          sortKey: -1752752189832
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        authentication:
+          type: basic
+          useISO88591: true
+          disabled: false
+          username: alice
+          password: "12345"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/shopping-cart/all
+        name: Get all shopping carts unauthorized
+        meta:
+          id: req_874352a97df442e5891f85c8cc8dd17c
+          created: 1753122468039
+          modified: 1753122476564
+          isPrivate: false
+          description: ""
+          sortKey: -1752752189807
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        authentication:
+          type: basic
+          useISO88591: true
+          disabled: false
+          username: john
+          password: "12345"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: 1st Alice order
+    meta:
+      id: fld_12ad6228e90247dbb3496a218edfd03a
+      created: 1752752270281
+      modified: 1752752270281
+      sortKey: -1752752270281
+      description: ""
+    children:
+      - url: http://localhost:8080/order?userName=alice
+        name: AliceOrders
+        meta:
+          id: req_fa139604073f4d0b9f50f4aeee03fe0e
+          created: 1752684073684
+          modified: 1752752284546
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284501
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/residue?productId=3e8d7f3c-11b2-4d9f-85c4-0b0f7c23bdfa
+        name: GetResidueOfProduct2
+        meta:
+          id: req_6694089f45a64ee799545492cd1b522c
+          created: 1752752323984
+          modified: 1752819100177
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284483.0312
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/residue?productId=3e8d7f3c-11b2-4d9f-85c4-0b0f7c23bdfa
+        name: GetResidueOfProduct1
+        meta:
+          id: req_e7565ffa580d49f489d2bef3dd703316
+          created: 1752752418281
+          modified: 1752818882259
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284486.9375
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order/return
+        name: Return particular
+        meta:
+          id: req_49f27882016f4c1a95cf4371a119e0e1
+          created: 1752752636780
+          modified: 1752818849699
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284485.375
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "orderId": "d6624e66-9382-480c-a93c-e7f026657064",
+              "products": {
+                "3e8d7f3c-11b2-4d9f-85c4-0b0f7c23bdfa": 2,
+                "c1e53aef-9b9d-44ee-9dc0-5dcf5e8f8d3a": 2
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/reserved?orderIds=d6624e66-9382-480c-a93c-e7f026657064
+        name: Get 1st orders reserved
+        meta:
+          id: req_9e2a1cae14f8474180f2eb857ef2421c
+          created: 1752754110351
+          modified: 1752771902779
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284488.5
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/delivery/picked
+        name: PickDelivery
+        meta:
+          id: req_23ac71f63bec4529a2c2262b55303694
+          created: 1752771405914
+          modified: 1752771672853
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284476
+        method: POST
+        body:
+          mimeType: application/json
+          text: de36850e-d847-4472-99a3-04b9fd9c4a74
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order?userName=alice
+        name: AliceOrder picked
+        meta:
+          id: req_a78bedf4eb7a4f3187b21e51e692b1a6
+          created: 1752771848557
+          modified: 1752772645667
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284475.2188
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/reserved?orderIds=d6624e66-9382-480c-a93c-e7f026657064
+        name: Get 1st orders reserved picked
+        meta:
+          id: req_b52d8e5eeb764d1eae0f321fa486525c
+          created: 1752771918778
+          modified: 1752819096188
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284483.8125
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order/calculate/delivery
+        name: Calculate delivery
+        meta:
+          id: req_5e1128f4c80b4470820f0e5ac52a23cb
+          created: 1752772250306
+          modified: 1752772302436
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284482.25
+        method: POST
+        body:
+          mimeType: application/json
+          text: d6624e66-9382-480c-a93c-e7f026657064
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order/calculate/assembly
+        name: Calculate assembly
+        meta:
+          id: req_d878c02570bc44ceb3c4dfe90e12c42a
+          created: 1752772356571
+          modified: 1752772368631
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284479.125
+        method: POST
+        body:
+          mimeType: application/json
+          text: d6624e66-9382-480c-a93c-e7f026657064
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order/calculate/total
+        name: Calculate total
+        meta:
+          id: req_001652ea541f466793f4c5ff94ba666a
+          created: 1752772411031
+          modified: 1752772419927
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284477.5625
+        method: POST
+        body:
+          mimeType: application/json
+          text: d6624e66-9382-480c-a93c-e7f026657064
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order/completed
+        name: Complete
+        meta:
+          id: req_28f106cbb97447d8881440abea4a43c0
+          created: 1752772450707
+          modified: 1752772475800
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284001
+        method: POST
+        body:
+          mimeType: application/json
+          text: d6624e66-9382-480c-a93c-e7f026657064
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/payment/refund
+        name: Payment refund
+        meta:
+          id: req_d674862b8dd64be782c41ab7c9bc2ade
+          created: 1752818937234
+          modified: 1752818983648
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284474.0469
+        method: POST
+        body:
+          mimeType: application/json
+          text: d6624e66-9382-480c-a93c-e7f026657064
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order?userName=alice
+        name: AliceOrder paid
+        meta:
+          id: req_ad5367be73d845808b97306bdc34673d
+          created: 1752819067443
+          modified: 1752819070493
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284473.461
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order?userName=alice
+        name: AliceOrder completed
+        meta:
+          id: req_125e188e6a9741bb9f6ffbc4e8304400
+          created: 1752819118593
+          modified: 1752819122272
+          isPrivate: false
+          description: ""
+          sortKey: -1752752283901
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/payment/failed
+        name: Payment failed
+        meta:
+          id: req_2ae824090a3b4c959dc45264ead72617
+          created: 1752819213135
+          modified: 1752819235101
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284486.1562
+        method: POST
+        body:
+          mimeType: application/json
+          text: d6624e66-9382-480c-a93c-e7f026657064
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order?userName=alice
+        name: AliceOrder failed payment
+        meta:
+          id: req_30eb267d91a04e70a36a86a127e64e33
+          created: 1752819264053
+          modified: 1752819270940
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284485.7656
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order?userName=alice
+        name: AliceOrder after return
+        meta:
+          id: req_d5ed07090fb44d8e8cb6deb1184d5017
+          created: 1752819308073
+          modified: 1752819327105
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284482.6406
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/delivery/successful
+        name: Delivery successful
+        meta:
+          id: req_9d8886b897b34da49233fef4f1e1b85d
+          created: 1752839621591
+          modified: 1752839634621
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284237.2305
+        method: POST
+        body:
+          mimeType: application/json
+          text: de36850e-d847-4472-99a3-04b9fd9c4a74
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order?userName=alice
+        name: AliceOrder delivered
+        meta:
+          id: req_0ef99b848f9045fa8647abcc839af0cf
+          created: 1752839671942
+          modified: 1752839674988
+          isPrivate: false
+          description: ""
+          sortKey: -1752752284119.1152
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: New Order
+    meta:
+      id: fld_25aa0530a9df4b9faa727c17a02b3dde
+      created: 1752818729885
+      modified: 1752818752211
+      sortKey: -1752630132084.5
+      description: ""
+    children:
+      - url: http://localhost:8080/order?userName=bob
+        name: Show Bobs Orders
+        meta:
+          id: req_bc98f4934ea5445bacb9d6e2c2a8d1c2
+          created: 1752684178216
+          modified: 1752819939441
+          isPrivate: false
+          description: ""
+          sortKey: -1752818761226
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order
+        name: Create Bobs Order 1
+        meta:
+          id: req_eeec086ad54448d581575567e000cf93
+          created: 1752819952901
+          modified: 1752840782065
+          isPrivate: false
+          description: ""
+          sortKey: -1752818761126
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "shopCartDto": {
+                "shoppingCartId": "b4d2c2de-ffac-4dc0-bb7f-d9e04e5b99e5",
+                "products": {
+                  "993f1491-0701-47c6-91f3-fb9b61cb3fc8": 12
+                }
+              },
+              "address": {
+                "country": "Germany",
+                "city": "Munich",
+                "street": "Leopoldstraße",
+                "house": "112A",
+                "flat": "35"
+              }
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order?userName=bob
+        name: Bobs Orders created
+        meta:
+          id: req_1b6cdc47ee13417ea231650069a2c3d6
+          created: 1752820037549
+          modified: 1752820046005
+          isPrivate: false
+          description: ""
+          sortKey: -1752818761026
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/delivery/picked
+        name: PickDelivery for Bob
+        meta:
+          id: req_49adcfa52085418db5e31e4f7e23e281
+          created: 1752820089769
+          modified: 1753127493780
+          isPrivate: false
+          description: ""
+          sortKey: -1752818760926
+        method: POST
+        body:
+          mimeType: application/json
+          text: 4962c5d4-2377-480d-b3cc-e772f2a234cd
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/warehouse/reserved?orderIds=17853c3b-c145-4b84-9c80-b121e19cc4c0
+        name: Get Bobs orders reserved picked products
+        meta:
+          id: req_31708bbccdd14217bc4a9f3742449de0
+          created: 1752820152034
+          modified: 1753127556244
+          isPrivate: false
+          description: ""
+          sortKey: -1752818760826
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/order?userName=bob
+        name: Bobs Order picked
+        meta:
+          id: req_e0c6c8523ce44051a9f8e9e65a7c6c18
+          created: 1753127671485
+          modified: 1753127694098
+          isPrivate: false
+          description: ""
+          sortKey: -1752818760726
+        method: GET
+        headers:
+          - name: User-Agent
+            value: insomnia/11.3.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_ba3bf3fe438cc6386f5c05db1633f9184f9d3c72
+    created: 1752576101575
+    modified: 1752576101575
+environments:
+  name: Base Environment
+  meta:
+    id: env_ba3bf3fe438cc6386f5c05db1633f9184f9d3c72
+    created: 1752576101574
+    modified: 1752576101574
+    isPrivate: false

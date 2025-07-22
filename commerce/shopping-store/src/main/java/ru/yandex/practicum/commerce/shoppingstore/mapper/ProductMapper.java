@@ -1,12 +1,13 @@
 package ru.yandex.practicum.commerce.shoppingstore.mapper;
 
 import org.springframework.stereotype.Component;
-import ru.yandex.practicum.commerce.shoppingstore.dto.ProductDto;
+import ru.yandex.practicum.dto.ProductDto;
 import ru.yandex.practicum.commerce.shoppingstore.entities.Product;
-import ru.yandex.practicum.commerce.shoppingstore.enums.EnumUtils;
-import ru.yandex.practicum.commerce.shoppingstore.enums.ProductCategory;
-import ru.yandex.practicum.commerce.shoppingstore.enums.ProductState;
-import ru.yandex.practicum.commerce.shoppingstore.enums.QuantityState;
+import ru.yandex.practicum.dto.ShortProduct;
+import ru.yandex.practicum.utiliteis.EnumUtils;
+import ru.yandex.practicum.enums.ProductCategory;
+import ru.yandex.practicum.enums.ProductState;
+import ru.yandex.practicum.enums.QuantityState;
 
 import java.util.List;
 import java.util.UUID;
@@ -43,6 +44,19 @@ public class ProductMapper {
     public static List<ProductDto> mapProductListToDtoList(List<Product> products) {
         return products.stream()
                 .map(ProductMapper::mapProductToDto)
+                .toList();
+    }
+
+    public static ShortProduct mapProductToShort(Product product) {
+        return ShortProduct.builder()
+                .productId(product.getProductId())
+                .price(product.getPrice())
+                .build();
+    }
+
+    public static List<ShortProduct> mapProductListToShorts(List<Product> products) {
+        return products.stream()
+                .map(ProductMapper::mapProductToShort)
                 .toList();
     }
 }

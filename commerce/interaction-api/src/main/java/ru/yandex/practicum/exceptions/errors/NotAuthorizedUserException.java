@@ -7,7 +7,7 @@ public class NotAuthorizedUserException extends SmartHomeException {
 
     public NotAuthorizedUserException() {
         super(
-                "Username is missing or empty.",
+                "User is not authorized.",
                 "Authorization is required. Please log in.",
                 String.valueOf(HttpStatus.UNAUTHORIZED)
         );

@@ -8,9 +8,10 @@ import java.util.Map;
 
 public class ProductInShoppingCartLowQuantityInWarehouseException extends SmartHomeException {
 
-    public ProductInShoppingCartLowQuantityInWarehouseException(Map<String, PairOfQuantities> productDeficits) {
+    public ProductInShoppingCartLowQuantityInWarehouseException(Map<String, PairOfQuantities> productDeficits,
+                                                                String message) {
         super(
-                "Some products from your shopping cart are not available in the requested quantity.",
+                message,
                 buildUserMessage(productDeficits),
                 String.valueOf(HttpStatus.BAD_REQUEST)
         );

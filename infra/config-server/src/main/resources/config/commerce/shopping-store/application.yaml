@@ -30,7 +30,7 @@ feign:
       default:
         loggerLevel: full
 server:
-  port: ${PORT:8082}
+  port: 0
 
 logging:
   level:

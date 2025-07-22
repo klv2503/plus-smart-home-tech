@@ -7,9 +7,9 @@ import java.util.List;
 
 public class NoProductsInShoppingCartException extends SmartHomeException {
 
-    public NoProductsInShoppingCartException(List<String> missingProductIds) {
+    public NoProductsInShoppingCartException(List<String> missingProductIds, String message) {
         super(
-                "Some products from your shopping cart are missing in the warehouse.",
+                message,
                 buildUserMessage(missingProductIds),
                 String.valueOf(HttpStatus.BAD_REQUEST)
         );
