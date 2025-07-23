@@ -32,11 +32,13 @@ public class WarehouseService {
     private final WarehouseRepository warehouseRepository;
     private final OrderBookingRepository orderBookingRepository;
 
+    @Transactional(readOnly = true)
     public ProductInWarehouse getProductInWarehouse(UUID productId) {
         return warehouseRepository.findById(productId)
                 .orElseThrow(() -> new ProductNotFoundException("Product", productId));
     }
 
+    @Transactional(readOnly = true)
     public List<OrderBooking> getListByOrderId(UUID id) {
         return orderBookingRepository.findAllByOrderId(id);
     }
@@ -88,6 +90,7 @@ public class WarehouseService {
         return scoreParameters(productMap, products);
     }
 
+    @Transactional(readOnly = true)
     public ResidueDto getResidue(String productId) {
         ProductInWarehouse product = getProductInWarehouse(UUID.fromString(productId));
         log.info("\n✅Received {}", product);
@@ -187,6 +190,7 @@ public class WarehouseService {
         return scoreParameters(productMap, products);
     }
 
+    @Transactional(readOnly = true)
     public List<OrderBookingDto> getBooked(Set<UUID> ids) {
         return OrderBookingMapper.mapListBookingToListDto(orderBookingRepository.findByOrderIdIn(ids));
     }

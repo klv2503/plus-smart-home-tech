@@ -1,6 +1,7 @@
 package ru.yandex.practicum.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,15 +15,19 @@ import java.util.Random;
 public class AddressDto {
 
     @NotBlank
+    @Size(min = 3, max = 70)
     private String country;
 
     @NotBlank
+    @Size(min = 3, max = 70)
     private String city;
 
     @NotBlank
+    @Size(min = 3, max = 200)
     private String street;
 
     @NotBlank
+    @Size(min = 1, max = 15)
     private String house;
 
     private String flat;

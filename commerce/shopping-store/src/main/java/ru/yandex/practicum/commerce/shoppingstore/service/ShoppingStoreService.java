@@ -30,10 +30,12 @@ public class ShoppingStoreService {
 
     private final ProductRepository repository;
 
+    @Transactional(readOnly = true)
     public Product getProduct(UUID id) {
         return repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product", id));
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductDto> getProductList(ProductCategory category, Pageable pageable) {
         SortParam param =
                 (pageable.getSort() == null) ? SortParam.UNSORTED : SortParam.valueOf(pageable.getSort().toUpperCase());
@@ -106,12 +108,14 @@ public class ShoppingStoreService {
         return true;
     }
 
+    @Transactional(readOnly = true)
     public ProductDto getProductDetails(String productId) {
         UUID prodId = UUID.fromString(productId);
         Product product = getProduct(prodId);
         return ProductMapper.mapProductToDto(product);
     }
 
+    @Transactional(readOnly = true)
     public List<ShortProduct> getProductByIds(List<UUID> ids) {
         return ProductMapper.mapProductListToShorts(repository.findByProductIdIn(ids));
     }

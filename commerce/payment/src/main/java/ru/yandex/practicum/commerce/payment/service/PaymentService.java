@@ -1,6 +1,6 @@
 package ru.yandex.practicum.commerce.payment.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -55,6 +55,7 @@ public class PaymentService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public BigDecimal getTotalCost(OrderDto order) {
         //Пока к методу обращение только из payment, где проверка выполняется,
         //но здесь продублировано на случай обращения из других мест кода
@@ -79,6 +80,7 @@ public class PaymentService {
         repository.save(payment);
     }
 
+    @Transactional(readOnly = true)
     public BigDecimal productCost(OrderDto order) {
         List<UUID> ids = order.getProducts().keySet().stream()
                 .map(UUID::fromString)

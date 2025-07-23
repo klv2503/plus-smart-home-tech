@@ -1,6 +1,6 @@
 package ru.yandex.practicum.commerce.delivery.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class DeliveryService {
     private final DeliveryWarehouseFeign warehouseFeign;
     private final DeliveryOrderFeign orderFeign;
 
-
+    @Transactional(readOnly = true)
     public Delivery getDelivery(UUID deliveryId) {
         return deliveryRepository.findById(deliveryId)
                 .orElseThrow(() -> new NoDeliveryFoundException(deliveryId));

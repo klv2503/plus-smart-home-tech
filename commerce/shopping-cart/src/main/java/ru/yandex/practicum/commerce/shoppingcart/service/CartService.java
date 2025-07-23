@@ -39,6 +39,7 @@ public class CartService {
                 .build();
     }
 
+    @Transactional(readOnly = true)
     public ShopCart getCart(UUID id) {
         return cartRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Cart", id));
     }
@@ -55,6 +56,7 @@ public class CartService {
         return userCart;
     }
 
+    @Transactional(readOnly = true)
     public List<ShoppingCartDto> findCarts(String userName) {
         //метод добавлен для возможности контроля состояния БД. Если userName не задан, то получаем все корзины
         List<ShopCart> carts = Strings.isEmpty(userName) ? cartRepository.findAll() :
@@ -116,6 +118,7 @@ public class CartService {
                 .filter(item -> ids.contains(item.getProductCode().toString()))
                 .toList();
         cart.removeItems(erasedProducts);
+        cartRepository.save(cart);
         ShoppingCartDto renewedCart = ShoppingCartDto.builder()
                 .shoppingCartId(cart.getCartId().toString())
                 .products(ShopCartMapper.mapCartItemsToProductMap(cart.getItems()))
@@ -147,6 +150,7 @@ public class CartService {
         return cartDto;
     }
 
+    @Transactional(readOnly = true)
     public CartSpecialDto getCartById(UUID cartId) {
         ShopCart cart = getCart(cartId);
         return ShopCartMapper.cartToCartSpecial(cart);

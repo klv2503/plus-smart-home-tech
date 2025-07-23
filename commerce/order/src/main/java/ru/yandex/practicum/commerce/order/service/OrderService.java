@@ -39,6 +39,7 @@ public class OrderService {
 
     private final OrderRepository repository;
 
+    @Transactional(readOnly = true)
     public Order getOrder(UUID id) {
         return repository.findById(id).orElseThrow(() -> new NoOrderFoundException(id));
     }
@@ -96,6 +97,7 @@ public class OrderService {
         return OrderMapper.orderToDto(order);
     }
 
+    @Transactional(readOnly = true)
     public List<OrderDto> getUsersOrders(String userName) {
         List<Order> orders = repository.findAllByUsername(userName);
         Set<UUID> ids = orders.stream()
@@ -108,7 +110,7 @@ public class OrderService {
             byOrder.getOrDefault(order.getOrderId(), List.of())
                     .forEach(b -> order.getProducts().put(b.getProductId(), b.getQuantity()));
         });
-        return OrderMapper.ordersListToDtoList(repository.findAllByUsername(userName));
+        return OrderMapper.ordersListToDtoList(orders);
     }
 
     public OrderDto returnOrder(ProductReturnRequest request) {
