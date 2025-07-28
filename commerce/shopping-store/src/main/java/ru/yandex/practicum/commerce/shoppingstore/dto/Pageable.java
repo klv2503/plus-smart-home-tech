@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.yandex.practicum.commerce.shoppingstore.enums.SortParam;
-import ru.yandex.practicum.commerce.shoppingstore.validation.EnumValid;
+import ru.yandex.practicum.enums.SortParam;
+import ru.yandex.practicum.validation.EnumValid;
 
 @Data
 @AllArgsConstructor

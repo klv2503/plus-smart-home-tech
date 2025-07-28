@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS payments;
+
+CREATE TABLE IF NOT EXISTS payments(
+    id UUID PRIMARY KEY,
+    order_id UUID NOT NULL,
+    state VARCHAR(10) NOT NULL
+);

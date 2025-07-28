@@ -10,11 +10,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.commerce.shoppingcart.dto.ChangeProductQuantityRequest;
 import ru.yandex.practicum.commerce.shoppingcart.service.CartService;
+import ru.yandex.practicum.dto.CartSpecialDto;
 import ru.yandex.practicum.dto.ShoppingCartDto;
 import ru.yandex.practicum.validation.ValidUUID;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +33,12 @@ public class ShopCartController {
         ShoppingCartDto cart = service.getCartByUserName(userName);
         log.info("\nShoppingCartController.getCartByUserName: returned {}", cart);
         return ResponseEntity.ok(cart);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ShoppingCartDto>> findCarts(
+            @RequestParam(value = "username", required = false) String userName) {
+        return ResponseEntity.ok(service.findCarts(userName));
     }
 
     @PutMapping
@@ -54,13 +62,19 @@ public class ShopCartController {
     public ResponseEntity<ShoppingCartDto> removeFromCart(@RequestParam("username") String userName,
                                                           @RequestBody List<@ValidUUID String> ids) {
         log.info("\nShoppingCartController.removeFromCart: accepted {} with {}", userName, ids);
-        return ResponseEntity.ok().body(service.removeFromCart(userName, ids));
+        return ResponseEntity.ok(service.removeFromCart(userName, ids));
     }
 
     @PostMapping("/change-quantity")
     public ResponseEntity<ShoppingCartDto> changeProductQuantity(@RequestParam("username") String userName,
                                                                  @RequestBody @Valid ChangeProductQuantityRequest request) {
         log.info("\nShoppingCartController.changeProductQuantity: accepted {} with {}", userName, request);
-        return ResponseEntity.ok().body(service.changeProductQuantity(userName, request));
+        return ResponseEntity.ok(service.changeProductQuantity(userName, request));
+    }
+
+    @GetMapping("/cart")
+    public ResponseEntity<CartSpecialDto> getCartById(@RequestParam UUID cartId) {
+        log.info("\nShoppingCartController.getCartById: accepted {}", cartId);
+        return ResponseEntity.ok(service.getCartById(cartId));
     }
 }

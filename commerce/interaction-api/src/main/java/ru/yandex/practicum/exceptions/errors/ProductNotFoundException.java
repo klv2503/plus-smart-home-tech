@@ -7,10 +7,10 @@ import java.util.UUID;
 
 public class ProductNotFoundException extends SmartHomeException {
 
-    public ProductNotFoundException(UUID productId) {
+    public ProductNotFoundException(String obj, UUID productId) {
         super(
-                String.format("Product with ID '%s' not found in the database.", productId),
-                "Requested product was not found.",
+                String.format("'%s' with ID '%s' not found in the database.", obj, productId),
+                String.format("Requested '%s' was not found.", obj),
                 String.valueOf(HttpStatus.NOT_FOUND)
         );
     }

@@ -4,22 +4,25 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.commerce.shoppingstore.dto.Pageable;
-import ru.yandex.practicum.commerce.shoppingstore.dto.ProductDto;
+import ru.yandex.practicum.dto.ProductDto;
 import ru.yandex.practicum.commerce.shoppingstore.dto.SetProductQuantityStateRequest;
-import ru.yandex.practicum.commerce.shoppingstore.enums.EnumUtils;
-import ru.yandex.practicum.commerce.shoppingstore.enums.ProductCategory;
-import ru.yandex.practicum.commerce.shoppingstore.enums.QuantityState;
+import ru.yandex.practicum.dto.ShortProduct;
+import ru.yandex.practicum.utiliteis.EnumUtils;
+import ru.yandex.practicum.enums.ProductCategory;
+import ru.yandex.practicum.enums.QuantityState;
 import ru.yandex.practicum.commerce.shoppingstore.service.ShoppingStoreService;
-import ru.yandex.practicum.commerce.shoppingstore.validation.EnumValid;
+import ru.yandex.practicum.validation.EnumValid;
 import ru.yandex.practicum.commerce.shoppingstore.validation.NotEmptyProductDto;
 import ru.yandex.practicum.validation.OnCreate;
 import ru.yandex.practicum.validation.UUIDValidator;
 import ru.yandex.practicum.validation.ValidUUID;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,19 +40,19 @@ public class ShoppingStoreController {
             @Valid @ModelAttribute Pageable pageable) {
         log.info("\nShoppingStoreController.getProductList: {}, {}", category, pageable);
         ProductCategory enumCategory = EnumUtils.fromStringOrThrow(category, ProductCategory.class);
-        return ResponseEntity.ok().body(service.getProductList(enumCategory, pageable));
+        return ResponseEntity.ok(service.getProductList(enumCategory, pageable));
     }
 
     @PutMapping
     public ResponseEntity<ProductDto> addNewProduct(@RequestBody @Validated(OnCreate.class) @Valid ProductDto productDto) {
         log.info("\nShoppingStoreController.addNewProduct: {}", productDto);
-        return ResponseEntity.status(HttpStatus.OK).body(service.addNewProduct(productDto));
+        return ResponseEntity.ok(service.addNewProduct(productDto));
     }
 
     @PostMapping
     public ResponseEntity<ProductDto> updateProduct(@RequestBody @Valid @NotEmptyProductDto ProductDto productDto) {
         log.info("\nShoppingStoreController.updateProduct: {}", productDto);
-        return ResponseEntity.status(HttpStatus.OK).body(service.updateProduct(productDto));
+        return ResponseEntity.ok(service.updateProduct(productDto));
     }
 
     @PostMapping("/removeProductFromStore")
@@ -60,7 +63,7 @@ public class ShoppingStoreController {
         if (!validator.isValid(correctedId, null)) {
             return ResponseEntity.badRequest().body(false);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(service.removeProduct(correctedId));
+        return ResponseEntity.ok(service.removeProduct(correctedId));
     }
 
     @PostMapping("/quantityState")
@@ -75,12 +78,21 @@ public class ShoppingStoreController {
                 .quantityState(quantityState)
                 .build();
 
-        return ResponseEntity.status(HttpStatus.OK).body(service.setProductQuantity(request));
+        return ResponseEntity.ok(service.setProductQuantity(request));
     }
 
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDto> getProductDetails(@PathVariable @ValidUUID String productId) {
-        return ResponseEntity.ok().body(service.getProductDetails(productId));
+        return ResponseEntity.ok(service.getProductDetails(productId));
+    }
+
+    @GetMapping("/product")
+    public ResponseEntity<List<ShortProduct>> getProduct(@RequestParam List<UUID> ids) {
+        //Формально в задании предлагается получить данные по одному продукту,
+        //но не получать же их по одному для расчета стоимости продуктов в корзине.
+        //Если потребуется получить данные по ровно одному продукту, то такой метод уже есть,
+        //а если интересует только цена одного, можно List из одного id передать
+        return ResponseEntity.ok(service.getProductByIds(ids));
     }
 
 }

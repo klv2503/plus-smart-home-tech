@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.yandex.practicum.commerce.shoppingstore.enums.ProductCategory;
-import ru.yandex.practicum.commerce.shoppingstore.enums.ProductState;
-import ru.yandex.practicum.commerce.shoppingstore.enums.QuantityState;
+import ru.yandex.practicum.enums.ProductCategory;
+import ru.yandex.practicum.enums.ProductState;
+import ru.yandex.practicum.enums.QuantityState;
 
 import java.math.BigDecimal;
 import java.util.UUID;

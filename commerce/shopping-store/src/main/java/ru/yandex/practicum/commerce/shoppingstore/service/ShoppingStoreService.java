@@ -9,14 +9,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.yandex.practicum.commerce.shoppingstore.dto.Pageable;
-import ru.yandex.practicum.commerce.shoppingstore.dto.ProductDto;
+import ru.yandex.practicum.dto.ProductDto;
 import ru.yandex.practicum.commerce.shoppingstore.dto.SetProductQuantityStateRequest;
-import ru.yandex.practicum.commerce.shoppingstore.enums.*;
 import ru.yandex.practicum.commerce.shoppingstore.entities.Product;
 import ru.yandex.practicum.commerce.shoppingstore.mapper.ProductMapper;
 import ru.yandex.practicum.commerce.shoppingstore.repository.ProductRepository;
+import ru.yandex.practicum.dto.ShortProduct;
+import ru.yandex.practicum.enums.*;
 import ru.yandex.practicum.exceptions.errors.ProductNotFoundException;
+import ru.yandex.practicum.utiliteis.EnumUtils;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -27,10 +30,12 @@ public class ShoppingStoreService {
 
     private final ProductRepository repository;
 
+    @Transactional(readOnly = true)
     public Product getProduct(UUID id) {
-        return repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+        return repository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product", id));
     }
 
+    @Transactional(readOnly = true)
     public Page<ProductDto> getProductList(ProductCategory category, Pageable pageable) {
         SortParam param =
                 (pageable.getSort() == null) ? SortParam.UNSORTED : SortParam.valueOf(pageable.getSort().toUpperCase());
@@ -103,10 +108,15 @@ public class ShoppingStoreService {
         return true;
     }
 
+    @Transactional(readOnly = true)
     public ProductDto getProductDetails(String productId) {
         UUID prodId = UUID.fromString(productId);
         Product product = getProduct(prodId);
         return ProductMapper.mapProductToDto(product);
     }
 
+    @Transactional(readOnly = true)
+    public List<ShortProduct> getProductByIds(List<UUID> ids) {
+        return ProductMapper.mapProductListToShorts(repository.findByProductIdIn(ids));
+    }
 }
